@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
 const port = process.env.PORT || 3500
@@ -36,6 +36,14 @@ async function run() {
             const result = await cursor.toArray()
             res.send(result)
         })
+
+        app.post("/carToys", async (req, res) => {
+            const toys = req.body;
+            const result = await carToysCollection.insertOne(toys)
+            res.send(result)
+        })
+
+     
 
 
         // Send a ping to confirm a successful connection
