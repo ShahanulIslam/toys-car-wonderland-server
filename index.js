@@ -31,7 +31,7 @@ async function run() {
 
         const carToysCollection = client.db("carstoysDB").collection("carstoy");
 
-        app.get("/carToys" , async(req,res) =>{
+        app.get("/carToys", async (req, res) => {
             const cursor = carToysCollection.find();
             const result = await cursor.toArray()
             res.send(result)
@@ -43,8 +43,6 @@ async function run() {
             res.send(result)
         })
 
-     
-
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
@@ -55,10 +53,6 @@ async function run() {
     }
 }
 run().catch(console.dir);
-
-
-
-
 
 
 app.get('/', (req, res) => {
