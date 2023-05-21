@@ -47,11 +47,20 @@ async function run() {
         app.get("/myToys", async (req, res) => {
             let query = {};
             if (req.query?.email) {
-                query = { seller_email: req.query.email }
+              query = { seller_email: req.query.email };
             }
-            const result = await carToysCollection.find(query).toArray();
-            res.send(result)
-        })
+            const result = await carToysCollection
+              .find(query)
+              .sort({ price: 1 })
+              .toArray();
+            const sortedResult = result.map((toy) => ({
+              ...toy,
+              price: parseFloat(toy.price),
+            }));
+            sortedResult.sort((a, b) => a.price - b.price);
+            res.send(sortedResult);
+          });
+
 
         app.get("/update/:id", async (req, res) => {
             const id = req.params.id;
